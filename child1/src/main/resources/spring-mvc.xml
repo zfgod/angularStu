@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/mvc
+         http://www.springframework.org/schema/mvc/spring-mvc.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd">
+
+       <!-- controller层 bean扫描-->
+       <context:component-scan base-package="sysManage.controller,
+                                             resourceManage.controller,fileManage.controller">
+       </context:component-scan>
+
+       <!-- 控制器映射器和控制器适配器-->
+       <mvc:annotation-driven>
+              <mvc:message-converters register-defaults="true">
+                     <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                            <property name="supportedMediaTypes" value="text/html;charset=UTF-8"/>
+                     </bean>
+                     <!-- json的解析-->
+                     <bean id="fastJsonHttpMessageConverter"
+                           class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                            <property name="supportedMediaTypes">
+                                   <list>
+                                          <!-- 这里顺序不能反，一定先写text/html,不然ie下出现下载提示 -->
+                                          <value>text/html;charset=UTF-8</value>
+                                          <value>application/json;charset=UTF-8</value>
+                                   </list>
+                            </property>
+                     </bean>
+              </mvc:message-converters>
+       </mvc:annotation-driven>
+       <!--登录拦截器-->
+       <!--<mvc:interceptors>-->
+           <!--<bean></bean>-->
+       <!--</mvc:interceptors>-->
+       <!--静态资源的默认执行-->
+       <mvc:default-servlet-handler/>
+    <!-- 视图解析器-->
+       <bean id="htmlViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+             <property name="prefix" value="/WEB-INF/views/"></property>
+             <property name="suffix" value=".html"></property>
+             <property name="order" value="1"></property>
+       </bean>
+</beans>
