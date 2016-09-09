@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-CN" ng-app="WangCheng">
+<head>
+    <meta charset="utf-8">
+    <title>用户管理-系统管理</title>
+    <meta name="keywords" content="用户管理-系统管理">
+    <meta name="description" content="用户管理-系统管理">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="ycui.css">
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="SystemManage.css">
+    <script type="text/javascript" src="angular.min.js"></script>
+    <script type="text/javascript" src="jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="ycui.js"></script>
+    <script type="text/javascript" src="global.js"></script>
+    <script type="text/javascript" src="application.js"></script>
+    <script type="text/javascript" src="systemManage.js"></script>
+</head>
+<body ng-controller="limitCtrl">
+<div class="yc-main-top clear"><a href="../{{rule.url}}" ng-repeat="rule in ruleListTab"
+                                  ng-class="{'cur':isLocation(rule.urlAll)}"><span ng-bind="rule.name"></span></a></div>
+<div class="yc-main-wraper" ng-controller="userManageCtrl">
+    <div class="yc-systemManage-operate clear"><a href="userIncreased.html" class="yc-btn fl"
+                                                  ng-if="systemManageRule['ManageUser']">+ 新增用户</a>
+
+        <div class="fr">
+            <div class="yc-select yc-select-long">
+                <div class="yc-select-current">角色名称</div>
+                <i class="yc-icon">&#xe605;</i>
+                <ul class="yc-select-options">
+                    <li class="yc-select-fitter"><input type="text" ng-model="fitterR"
+                                                        ng-keyup="($event.keyCode == 13) && fitterSelectR('roleName')">
+                        <i class="yc-icon" ng-click="fitterSelectR('roleName')">&#xe623;</i></li>
+                    <li data-value="ro:-1">全部</li>
+                    <li data-value="ro:{{roleList.id}}" ng-repeat="roleList in roleList">{{roleList.roleName}}</li>
+                </ul>
+            </div>
+            <div class="yc-select yc-select-long">
+                <div class="yc-select-current yc-select-current2" style="width:170px">所属公司</div>
+                <i class="yc-icon">&#xe605;</i>
+                <ul class="yc-select-options">
+                    <li class="yc-select-fitter"><input type="text" ng-model="fitterM"
+                                                        ng-keyup="($event.keyCode == 13) && fitterSelectM('companyName')">
+                        <i class="yc-icon" ng-click="fitterSelectM('companyName')">&#xe623;</i></li>
+                    <li data-value="cn:-1">全部</li>
+                    <li data-value="cn:{{companyList.id}}" ng-repeat="companyList in companyList track by $index">
+                        {{companyList.companyName}}
+                    </li>
+                </ul>
+            </div>
+            <div class="yc-select yc-select-long fitterSelect">
+                <div class="yc-select-current yc-select-current2">请选择所属部门</div>
+                <i class="yc-icon">&#xe605;</i>
+                <ul class="yc-select-options">
+                    <li class="yc-select-fitter"><input type="text" ng-model="fitterM2"
+                                                        ng-keyup="($event.keyCode == 13) && fitterSelect2('departmentName')">
+                        <i class="yc-icon" ng-click="fitterSelect2('departmentName')">&#xe623;</i></li>
+                    <li><p data-value="de:-1" class="back-color">全部</p></li>
+                    <li ng-repeat="de in departmentList"><p data-value="de:{{de.agencyNumber}}" class="back-color">
+                        {{de.departmentName}}</p>
+                        <ul ng-if="de.nextDepts.length > 0">
+                            <li ng-repeat="ne in de.nextDepts"><p data-value="de:{{ne.agencyNumber}}"
+                                                                  class="back-color">{{ne.departmentName}}</p>
+                                <ul ng-if="ne.nextDepts.length > 0">
+                                    <li ng-repeat="ned in ne.nextDepts"><p data-value="de:{{ned.agencyNumber}}"
+                                                                           class="back-color">{{ned.departmentName}}</p>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="yc-search-wraper"><input type="text" ng-placeholder="请输入用户名或姓名" ng-model="search"> <i
+                    class="yc-icon" ng-click="redirect(1,search)">&#xe623;</i></div>
+        </div>
+    </div>
+    <div class="yc-systemManage-table">
+        <table class="yc-table yc-table-trbg">
+            <thead>
+            <tr>
+                <th class="center">添加日期</th>
+                <th class="center">用户ID</th>
+                <th>用户名</th>
+                <th class="center">姓名</th>
+                <th class="center">角色</th>
+                <th>公司名称</th>
+                <th>部门</th>
+                <th class="center">状态</th>
+                <th class="center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in items">
+                <td class="center" ng-bind="::item.createTime|dateYMD"></td>
+                <td class="center" ng-bind="::item.id"></td>
+                <td ng-bind="::item.logName"></td>
+                <td class="center" ng-bind="::item.trueName"></td>
+                <td class="center" ng-bind="::item.roleName"></td>
+                <td ng-bind="::item.companyName"></td>
+                <td ng-bind="::item.agencyNames"></td>
+                <td class="center">{{::item.state==-1? "禁用" : "启用"}}</td>
+                <td class="center"><a title="编辑信息" ng-if="systemManageRule['ManageUser']"
+                                      href="userCompile.html?id={{item.id}}">编辑</a> <a title="查看信息"
+                                                                                       ng-if="!systemManageRule['ManageUser']"
+                                                                                       href="userCompile.html?id={{item.id}}">查看</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="client-judge" ng-if="total_page<1">您好，暂时没有符合条件的任何数据</div>
+    </div>
+    <div class="yc-pages" ng-show="total_page>1"><span class="yc-pages-num" ng-click="redirect(1)">首页</span> <span
+            class="yc-pages-num" title="跳转到 上一页" ng-show="page>1" ng-click="redirect(prev_page)">&lt;</span> <span
+            class="yc-pages-num yc-pages-current" title="当前页" ng-bind="page"></span> <span class="yc-pages-num"
+                                                                                           title="跳转到 下一页"
+                                                                                           ng-show="page<total_page"
+                                                                                           ng-click="redirect(page+1)">&gt;</span>
+        <span class="yc-pages-num" ng-click="redirect(total_page)">尾页</span> <span>共<span ng-bind="total_page"></span>页, 跳转到第</span><input
+                type="text" class="yc-pages-input" ng-model="go"><span class="group-text">页</span>
+        <button class="yc-pages-go" ng-click="redirect(go)">确定</button>
+    </div>
+</div>
+</body>
+</html>
+<!--!!!!! 最后修改于： 2016-9-9 9:56:7 !!!!!-->

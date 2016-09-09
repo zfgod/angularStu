@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-CN" ng-app="WangCheng">
+<head>
+    <meta charset="utf-8">
+    <title>修改用户-用户管理-系统管理</title>
+    <meta name="keywords" content="修改用户-用户管理-系统管理">
+    <meta name="description" content="修改用户-用户管理-系统管理">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="shortcut icon" href="../../static/img/favicon.ico">
+    <link rel="stylesheet" href="../../static/css/ycui.css">
+    <link rel="stylesheet" href="../../static/css/global.css">
+    <link rel="stylesheet" href="../../static/css/SystemManage.css">
+</head>
+<body ng-controller="limitCtrl" class="userModify">
+<div class="yc-main-top clear"><a href="../{{rule.url}}" ng-repeat="rule in ruleListTab"
+                                  ng-class="{'cur':isLocation(rule.urlAll)}"><span ng-bind="rule.name"></span></a></div>
+<div class="yc-compile" ng-controller="userEditCtrl">
+    <div class="yc-compile-add">
+        <div class="yc-compile-head" ng-if="systemManageRule['ManageUser']">修改用户</div>
+        <div class="yc-compile-head" ng-if="!systemManageRule['ManageUser']">查看用户</div>
+    </div>
+    <form name="myForm" class="yc-compile-articl userCompileForm">
+        <div class="userIn-account">
+            <div class="yc-user-message">账户信息</div>
+        </div>
+        <div class="yc-compile-section clear">
+            <div class="yc-section-text yc-col-2">*用户名</div>
+            <div class="yc-section-input yc-col-10" id="yc-abbreviation"><input name="loginName" disabled="disabled"
+                                                                                type="text" ng-placeholder="请输入用户名"
+                                                                                ng-model="userMode.logName"></div>
+        </div>
+        <div class="yc-compile-section clear">
+            <div class="yc-section-text yc-col-2"></div>
+            <div class="yc-section-input yc-col-10"><a class="pointer" style="color: #3f88d2"
+                                                       ng-click="highBox()">修改密码</a> <a class="pointer" padding-left
+                                                                                        style="color: #3f88d2"
+                                                                                        ng-click="initialize()">初始化密码</a>
+            </div>
+        </div>
+        <div class="userIn-account">
+            <div class="yc-user-message">用户信息</div>
+        </div>
+        <div class="yc-compile-section clear">
+            <div class="yc-section-text yc-col-2">*姓名</div>
+            <div class="yc-section-input yc-col-10"><input type="text" name="userName" ng-placeholder="请输入用户姓名"
+                                                           ng-model="userMode.trueName"></div>
+        </div>
+        <div class="yc-compile-section clear">
+            <div class="yc-section-text yc-col-2">*所属</div>
+            <div class="yc-section-input yc-col-10">
+                <div class="yc-select yc-select-long">
+                    <div class="yc-select-current yc-select-current2">{{userMode.companyName}}</div>
+                    <i class="yc-icon">&#xe605;</i>
+                    <ul class="yc-select-options"></ul>
+                </div>
+                <span padding-left style="color: red" ng-show="!userMode.companyId && validShow">请选择所属</span></div>
+        </div>
+        <div class="yc-compile-section clear">
+            <div class="yc-section-text yc-col-2">*部门</div>
+            <div class="yc-section-input yc-col-10">
+                <div class="yc-select yc-select-long fitterSelect">
+                    <div class="yc-select-current yc-select-current2">
+                        {{userMode.agencyNames.split('-')[userMode.agencyNames.split('-').length-1] || '请选择部门'}}
+                    </div>
+                    <i class="yc-icon">&#xe605;</i>
+                    <ul class="yc-select-options">
+                        <li class="yc-select-fitter"><input type="text" ng-model="fitterM2"
+                                                            ng-keyup="($event.keyCode == 13) && fitterSelect2('departmentName')">
+                            <i class="yc-icon" ng-click="fitterSelect2('departmentName')">&#xe623;</i></li>
+                        <li ng-repeat="de in departmentList"><p data-value="de:{{de.agencyNumber}}"
+                                                                data-name="{{de.departmentNames}}" class="back-color">
+                            {{de.departmentName}}</p>
+                            <ul ng-if="de.nextDepts.length > 0">
+                                <li ng-repeat="ne in de.nextDepts"><p data-value="de:{{ne.agencyNumber}}"
+                                                                      data-name="{{ne.departmentNames}}"
+                                                                      class="back-color">{{ne.departmentName}}</p>
+                                    <ul ng-if="ne.nextDepts.length > 0">
+                                        <li ng-repeat="ned in ne.nextDepts"><p data-value="de:{{ned.agencyNumber}}"
+                                                                               data-name="{{ned.departmentNames}}"
+                                                                               class="back-color">
+                                            {{ned.departmentName}}</p></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <span padding-left style="color: red" ng-show="!userMode.agencyNumber && validShow">请选择部门</span></div>
+        </div>
+        <div class="yc-compile-section clear">
+            <div class="yc-section-text yc-col-2">上级领导</div>
+            <div class="yc-section-input yc-col-10">
+                <div class="yc-section-input">
+                    <div class="yc-select select-userType yc-select-long">
+                        <div class="yc-select-current">{{userMode.leaderName || '请选择上级领导'}}</div>
+                        <i class="yc-icon">&#xe605;</i>
+                        <ul class="yc-select-options">
+                            <li data-value="le:-1" data-name="无">无</li>
+                            <li data-value="le:{{li.id}}" data-name="{{li.trueName}}"
+                                ng-repeat="li in userList track by $index">{{li.trueName}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yc-compile-section clear">
+            <div class="yc-section-text yc-col-2">手机</div>
+            <div class="yc-section-input yc-col-10"><input name="myPhone" type="text" ng-placeholder="请输入手机"
+                                                           ng-model="userMode.phone"></div>
+        </div>
+        <div class="yc-compile-section clear">
+            <div class="yc-section-text yc-col-2">座机</div>
+            <div class="yc-section-input yc-col-10"><input name="telephone" type="text" ng-placeholder="请输入座机"
+                                                           ng-model="userMode.telephone"></div>
+        </div>
+        <div class="yc-compile-section clear">
+            <div class="yc-section-text yc-col-2">邮箱</div>
+            <div class="yc-section-input yc-col-10"><input name="myEmail" type="text" ng-placeholder="请输入邮箱"
+                                                           ng-model="userMode.email"></div>
+        </div>
+        <div class="yc-compile-section clear">
+            <div class="yc-section-text yc-col-2">状态</div>
+            <div class="yc-section-input yc-col-10">
+                <div class="yc-section-input yc-section-state"><label class="pointer" padding-right><input value="0"
+                                                                                                           ng-model="userMode.state"
+                                                                                                           type="radio"
+                                                                                                           class="yc-user-checkbox">
+                    <span>开启</span></label><label class="pointer" padding-right><input ng-model="userMode.state"
+                                                                                       type="radio" value="-1"
+                                                                                       class="yc-user-checkbox"> <span>禁用</span></label>
+                </div>
+            </div>
+        </div>
+        <div class="userIn-account">
+            <div class="yc-user-message">角色信息</div>
+        </div>
+        <div class="yc-compile-section clear">
+            <div class="yc-section-input">
+                <div class="yc-section-text yc-col-2">*用户角色</div>
+                <div class="yc-col-10 selectArea userRuleArea">
+                    <table>
+                        <tbody>
+                        <tr ng-repeat="roles in roleList">
+                            <td class="userRuleSelect" ng-repeat="role in roles"><label><input type="radio"
+                                                                                               ng-model="$parent.$parent.userMode.roleId"
+                                                                                               value="{{role.id}}">
+                                <span ng-bind="role.roleName"></span></label></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="yc-compile-bott"><input type="button" value="修 改" ng-if="systemManageRule['ManageUser']"
+                                            class="yc-bott-alter btn-default" ng-click="postEdit()"> <input
+                ng-if="!systemManageRule['ManageUser']" value="返 回" class="yc-bott-alter btn-default" type="button"
+                onclick='location.replace("userManage.html")'> <a ng-if="systemManageRule['ManageUser']"
+                                                                  class="yc-bott-alter-scal"
+                                                                  href="userManage.html">取消</a></div>
+    </form>
+</div>
+<div class="dialog-bg-pass">
+    <form class="dialog-wraper-pass">
+        <div class="dialog-title-pass">修改密码 <i class="dialog-close-pass yc-icon">&#xe614;</i></div>
+        <div class="dialog-con-pass">
+            <div class="yc-compile-section clear">
+                <div class="yc-section-text yc-col-2">用户名&nbsp;</div>
+                <div class="yc-section-input yc-col-5">
+                    <div class="yc-section-input"><input type="text" disabled="disabled"></div>
+                </div>
+            </div>
+            <div class="yc-compile-section clear">
+                <div class="yc-section-text yc-col-2">原密码&nbsp;</div>
+                <div class="yc-section-input yc-col-5">
+                    <div class="yc-section-input"><input type="password" name="oldPass" ng-model="oldPass"
+                                                         ng-placeholder="请输入原密码"></div>
+                </div>
+                <div class="yc-col-5 passShow">输入的密码和原始密码不一致，请重新输入</div>
+            </div>
+            <div class="yc-compile-section clear">
+                <div class="yc-section-text yc-col-2">新密码&nbsp;</div>
+                <div class="yc-section-input yc-col-5">
+                    <div class="yc-section-input"><input type="password" name="newPass" ng-placeholder="请输入新密码"></div>
+                </div>
+                <div class="yc-col-5 passShow6">请至少输入6位及以上的密码</div>
+            </div>
+            <div class="yc-compile-section clear">
+                <div class="yc-section-text yc-col-2">确认密码&nbsp;</div>
+                <div class="yc-section-input yc-col-5">
+                    <div class="yc-section-input"><input type="password" name="newPassAgin" ng-placeholder="请再次输入新密码">
+                    </div>
+                </div>
+                <div class="yc-col-5 passShow2">两次输入的密码不一致，请重新输入</div>
+            </div>
+        </div>
+        <div class="dialog-submit-pass"><a href="javascript:;" class="ok">确定</a> <a href="javascript:;"
+                                                                                    class="no">取消</a></div>
+    </form>
+</div>
+<script type="text/javascript" src="../../static/lib/angular.min.js"></script>
+<script type="text/javascript" src="../../static/lib/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="../../static/js/ycui.js"></script>
+<script type="text/javascript" src="../../static/lib/validation/jquery.validate.js"></script>
+<script type="text/javascript" src="../../static/lib/validation/jquery.validate.messages.js"></script>
+<script type="text/javascript" src="../../static/js/global.js"></script>
+<script type="text/javascript" src="../../static/js/application.js"></script>
+<script type="text/javascript" src="../../static/lib/md5.js"></script>
+<script type="text/javascript" src="../../static/js/systemManage.js"></script>
+</body>
+</html>
+<!--!!!!! 最后修改于： 2016-9-9 9:56:7 !!!!!-->

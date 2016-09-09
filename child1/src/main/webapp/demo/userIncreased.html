@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-CN" ng-app="WangCheng">
+<head>
+    <meta charset="utf-8">
+    <title>新增用户-用户管理-系统管理</title>
+    <meta name="keywords" content="新增用户-用户管理-系统管理">
+    <meta name="description" content="新增用户-用户管理-系统管理">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="shortcut icon" href="../../static/img/favicon.ico">
+    <link rel="stylesheet" href="../../static/css/ycui.css">
+    <link rel="stylesheet" href="../../static/css/global.css">
+    <link rel="stylesheet" href="../../static/css/SystemManage.css">
+    <script type="text/javascript" src="../../static/lib/angular.min.js"></script>
+    <script type="text/javascript" src="../../static/lib/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="../../static/js/ycui.js"></script>
+    <script type="text/javascript" src="../../static/lib/validation/jquery.validate.js"></script>
+    <script type="text/javascript" src="../../static/lib/validation/jquery.validate.messages.js"></script>
+    <script type="text/javascript" src="../../static/js/global.js"></script>
+    <script type="text/javascript" src="../../static/js/application.js"></script>
+    <script type="text/javascript" src="../../static/lib/md5.js"></script>
+    <script type="text/javascript" src="../../static/js/systemManage.js"></script>
+</head>
+<body ng-controller="limitCtrl" class="userModify">
+<div class="yc-main-top clear"><a href="../{{rule.url}}" ng-repeat="rule in ruleListTab"
+                                  ng-class="{'cur':isLocation(rule.urlAll)}"><span ng-bind="rule.name"></span></a></div>
+<div class="yc-compile" ng-controller="userAddCtrl">
+    <div class="yc-compile-add">
+        <div class="yc-compile-head">新增用户</div>
+    </div>
+    <form name="myForm" class="yc-compile-articl userIncreaseForm">
+        <div class="userIn-account">
+            <div class="yc-user-message">账户信息</div>
+        </div>
+        <div class="yc-compile-section clear">
+            <div class="yc-section-text yc-col-2">*用户名</div>
+            <div class="yc-section-input yc-col-10" id="yc-abbreviation"><input name="loginName" type="text"
+                                                                                ng-placeholder="请输入用户名"
+                                                                                ng-model="userMode.logName"></div>
+        </div>
+        <div class="yc-compile-section clear">
+            <div class="yc-section-text yc-col-2">*密码</div>
+            <div class="yc-section-input yc-col-10"><input name="passWord" type="password" ng-placeholder="请输入密码"
+                                                           ng-model="userMode.logPwd"></div>
+        </div>
+        <div class="yc-compile-section clear">
+            <div class="yc-section-text yc-col-2">*确认密码</div>
+            <div class="yc-section-input yc-col-10"><input name="isPassWord" type="password" ng-placeholder="请再次输入密码"
+                                                           ng-model="userMode.logPwd2"></div>
+        </div>
+        <div class="userIn-account">
+            <div class="yc-user-message">用户信息</div>
+        </div>
+        <div class="yc-compile-section clear">
+            <div class="yc-section-text yc-col-2">*姓名</div>
+            <div class="yc-section-input yc-col-10"><input type="text" name="userName" ng-placeholder="请输入用户姓名"
+                                                           ng-model="userMode.trueName"></div>
+        </div>
+        <div class="yc-compile-section clear">
+            <div class="yc-section-text yc-col-2">*所属</div>
+            <div class="yc-section-input yc-col-10">
+                <div class="yc-select yc-select-long">
+                    <div class="yc-select-current yc-select-current2">所属</div>
+                    <i class="yc-icon">&#xe605;</i>
+                    <ul class="yc-select-options">
+                        <li class="yc-select-fitter"><input type="text" ng-model="fitterM"
+                                                            ng-keyup="($event.keyCode == 13) && fitterSelect('companyName')">
+                            <i class="yc-icon" ng-click="fitterSelect('companyName')">&#xe623;</i></li>
+                        <li data-value="co:{{co.id}}" ng-repeat="co in companyList track by $index">{{co.companyName}}
+                        </li>
+                    </ul>
+                </div>
+                <span padding-left style="color: #808080">公司名称一旦提交，不得修改</span> <span padding-left style="color: red"
+                                                                                     ng-show="!userMode.companyId && validShow">请选择所属公司</span>
+            </div>
+        </div>
+        <div class="yc-compile-section clear" ng-show="departmentListFitter && departmentListFitter.length>0">
+            <div class="yc-section-text yc-col-2">*部门</div>
+            <div class="yc-section-input yc-col-10">
+                <div class="yc-select yc-select-long fitterSelect">
+                    <div class="yc-select-current yc-select-current2">
+                        {{userMode.agencyNames.split('-')[userMode.agencyNames.split('-').length-1] || '请选择部门'}}
+                    </div>
+                    <i class="yc-icon">&#xe605;</i>
+                    <ul class="yc-select-options">
+                        <li class="yc-select-fitter"><input type="text" ng-model="fitterM2"
+                                                            ng-keyup="($event.keyCode == 13) && fitterSelect2('departmentName')">
+                            <i class="yc-icon" ng-click="fitterSelect2('departmentName')">&#xe623;</i></li>
+                        <li ng-repeat="de in departmentList"><p data-value="de:{{de.agencyNumber}}"
+                                                                data-name="{{de.departmentNames}}" class="back-color">
+                            {{de.departmentName}}</p>
+                            <ul ng-if="de.nextDepts.length > 0">
+                                <li ng-repeat="ne in de.nextDepts"><p data-value="de:{{ne.agencyNumber}}"
+                                                                      data-name="{{ne.departmentNames}}"
+                                                                      class="back-color">{{ne.departmentName}}</p>
+                                    <ul ng-if="ne.nextDepts.length > 0">
+                                        <li ng-repeat="ned in ne.nextDepts"><p data-value="de:{{ned.agencyNumber}}"
+                                                                               data-name="{{ned.departmentNames}}"
+                                                                               class="back-color">
+                                            {{ned.departmentName}}</p></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <span padding-left style="color: red" ng-show="!userMode.agencyNumber && validShow">请选择所属部门</span></div>
+        </div>
+        <div class="yc-compile-section clear" ng-show="userList && userList.length>0">
+            <div class="yc-section-text yc-col-2">上级领导</div>
+            <div class="yc-section-input yc-col-10">
+                <div class="yc-section-input">
+                    <div class="yc-select select-userType yc-select-long">
+                        <div class="yc-select-current">{{_trueName || '请选择上级领导'}}</div>
+                        <i class="yc-icon">&#xe605;</i>
+                        <ul class="yc-select-options">
+                            <li data-value="le:-1" data-name="无">无</li>
+                            <li data-value="le:{{li.id}}" data-name="{{li.trueName}}"
+                                ng-repeat="li in userList track by $index">{{li.trueName}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yc-compile-section clear">
+            <div class="yc-section-text yc-col-2">手机</div>
+            <div class="yc-section-input yc-col-10"><input name="myPhone" type="text" ng-placeholder="请输入手机"
+                                                           ng-model="userMode.phone"></div>
+        </div>
+        <div class="yc-compile-section clear">
+            <div class="yc-section-text yc-col-2">座机</div>
+            <div class="yc-section-input yc-col-10"><input name="telephone" type="text" ng-placeholder="请输入座机"
+                                                           ng-model="userMode.telephone"></div>
+        </div>
+        <div class="yc-compile-section clear">
+            <div class="yc-section-text yc-col-2">邮箱</div>
+            <div class="yc-section-input yc-col-10"><input name="myEmail" type="email" ng-placeholder="请输入邮箱"
+                                                           ng-model="userMode.email"></div>
+        </div>
+        <div class="userIn-account" ng-if="roleList">
+            <div class="yc-user-message">角色信息</div>
+        </div>
+        <div class="yc-compile-section clear" ng-if="roleList">
+            <div class="yc-section-input">
+                <div class="yc-section-text yc-col-2">*用户角色</div>
+                <div class="yc-col-10 selectArea userRuleArea">
+                    <table>
+                        <tbody>
+                        <tr ng-repeat="roles in roleList">
+                            <td class="userRuleSelect" ng-repeat="role in roles"><label><input type="radio"
+                                                                                               ng-model="$parent.$parent.userMode.roleId"
+                                                                                               value="{{role.id}}">
+                                <span ng-bind="role.roleName"></span></label></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <span ng-if="roleIdBo" class="error-message">请选择用户角色</span></div>
+        </div>
+        <div class="yc-compile-bott"><input type="button" class="yc-bott-alter btn-default" value="提 交"
+                                            ng-click="postEdit()"> <a class="yc-bott-alter-scal" href="userManage.html">取消</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<!--!!!!! 最后修改于： 2016-9-9 9:56:7 !!!!!-->
