@@ -12,7 +12,13 @@ myServiceApp.filter('type_UserAge',function(){
         }
     }
 });
-
+myServiceApp.filter('type_UserSex',function(){
+    return function(input){
+        //switch (input){
+        //    "1": return "男";
+        //}
+    }
+});
 
 function toQueryPair(e, a) {
     return "undefined" == typeof a ? e : e + "=" + encodeURIComponent(null === a ? "" : String(a))
