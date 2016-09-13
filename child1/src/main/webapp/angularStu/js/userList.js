@@ -34,48 +34,23 @@ function toBodyString(e) {
     }
     return a.join("&")
 }
-var configForm = {
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    },
-    transformRequest: function (data) {
-        if (!data) return undefined;
-        return toBodyString(data);
-    }
-};
-var configJson = {
-    headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
-    },
-    transformRequest: function (data) {
-        if (!data) return undefined;
-        return JSON.stringify(data);
-    }
-};
 
 myServiceApp.factory('userListService', ['$http',
     function($http) {
         return {
             userList:function (query){
-                return $http.post('http://localhost:8081/json/commitUser.do',query,configJson)
+                return $http.post('http://localhost:8081/json/commitUser.do',query,configForm)
             }
         }
 
     }
 ]);
-myServiceApp.controller('ServiceController', ['$rootScope','$scope','$http',
-    function($rootScope,$scope,$http) {
-        //进入页面加载用户列表
-        $http.get('http://localhost:8081/json/userList.do')
-            .success(function (res) {
-                if(res.code == 200){
-                    $scope.users = res.items;
-                }else{
-                    alert(res.msg);
-                }
-            }).error(function () {
-                alert("出错了！");
-            });
+myServiceApp.controller('ServiceController', ['$rootScope','$scope','$http','userListService',
+    function($rootScope,$scope,$http,userListService) {
+        var query = {
+            pageSize:8,
+            pageIndex:1
+        };
         //人群属性下拉
         $scope.ageTypeSelect = [
             {name: '幼儿',id:1},
@@ -83,20 +58,42 @@ myServiceApp.controller('ServiceController', ['$rootScope','$scope','$http',
             {name: '青年',id:3},
             {name: '成年',id:4}
         ];
-        //查看
-        $scope.selectOne = function(query){
-            $http.post('http://localhost:8081/json/oneDetail.do?id=' + query)
-                .success(function (data) {
-                    console.log(data);
-
-                }).error(function (){
+        //进入页面加载用户列表
+        $http.post('http://localhost:8081/json/userList.do',query,configForm)
+            .success(function (res) {
+                if(res.code == 200){
+                    $scope.users = res.items;
+                    $scope.page = res.page;
+                    $scope.totalPage = res.totalPage;
+                    $scope.totalCount = res.totalCount;
+                    $scope.pageSize = res.pageSize;
+                }else{
+                    alert(res.msg);
+                }
+            }).error(function () {
+                alert("出错了！");
+            });
+        //分页搜索
+        $scope.redirect = function(count){
+            var url = 'http://localhost:8081/json/userList.do';
+            $scope.searchName && (query.searchName = $scope.searchName);
+            $scope.searchAge && (query.intValue = $scope.searchAge);
+            $scope.ageType && (query.ageType = $scope.ageType);
+            query.pageIndex = count;
+            $http.post(url,query,configForm)
+                .success(function(res){
+                    $scope.users = res.items;
+                    $scope.page = res.page;
+                    $scope.totalPage = res.totalPage;
+                    $scope.totalCount = res.totalCount;
+                    $scope.pageSize = res.pageSize;
+                }).error(function(){
                     console.log("error...");
                 });
         };
         //重新搜索列表
         $scope.flashList = function(){
             var url = 'http://localhost:8081/json/userList.do';
-            var query = {pageSize:13,pageIndex:1};
             //搜索条件获取
             $scope.searchName && (query.searchName = $scope.searchName);
             $scope.searchAge && (query.intValue = $scope.searchAge);
@@ -105,11 +102,24 @@ myServiceApp.controller('ServiceController', ['$rootScope','$scope','$http',
             //查询
             $http.post(url,query,configForm)
                 .success(function(res){
-                console.log(res);
+                    $scope.users = res.items;
+                    $scope.page = res.page;
+                    $scope.totalPage = res.totalPage;
+                    $scope.totalCount = res.totalCount;
+                    $scope.pageSize = res.pageSize;
             }).error(function(){
                 console.log("error...");
             });
-        }
+        };
+        ////查看用户
+        //$scope.selectOne = function(query){
+        //    $http.post('http://localhost:8081/json/oneDetail.do?id=' + query)
+        //        .success(function (data) {
+        //            console.log(data);
+        //        }).error(function (){
+        //            console.log("error...");
+        //        });
+        //};
     }
 ]);
 

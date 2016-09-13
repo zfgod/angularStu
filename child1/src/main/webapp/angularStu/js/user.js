@@ -7,16 +7,22 @@ userDetailApp.controller("UserDetailCtrl",['$http','$scope',
     function($http,$scope){
         //获取传递参数
         var id = parseInt(getSearch("id"));
+        var name = getSearch("name");
         //var id = getSearch("id");
-        if(id!=null && judgeInt(id)){
-            alert(true);
+        if(id && judgeInt(id) && name){
+            alert("查询用户"+name+"中。。。");
             //加载user信息
-            $http.get('http://localhost:8081/json/oneDetail.do?id='+id).success(function (data) {
-                console.log("get user...success");
-                console.log(data);
-                $scope.userModel = data;
-                console.log($scope.userModel.logName)
-
+            //springMvc：@RequestParam("id")Integer id
+            $http.get('http://localhost:8081/json/oneDetail.do?id='+id)
+                .success(function (res) {
+                    if(res.code && res.code == 200){
+                        alert("正在为您显示内容。。");
+                        $scope.userModel = res.user;
+                    }else if(res.code && res.code == 404){
+                        alert("没有找到！");
+                    }else{
+                        alert("程序出错！");
+                    }
             }).error(function () {
                 console.log('error....')
             });
