@@ -38,9 +38,9 @@ public class BaseController {
     public JSONObject returnPageResult(JSONObject result,int pageSize,int pageIndex,
                                        long total,List items){
         result.put("code",200);
-        result.put("total_count",total);
-        result.put("total_page",total%pageSize==0?total/pageSize:total/pageSize+1);
-        result.put("page_size",pageSize);
+        result.put("totalCount",total);
+        result.put("totalPage",total%pageSize==0?total/pageSize:total/pageSize+1);
+        result.put("pageSize",pageSize);
         result.put("page",pageIndex);
         result.put("prev_page",pageIndex>=2?pageIndex-1:1);
         result.put("items",items);

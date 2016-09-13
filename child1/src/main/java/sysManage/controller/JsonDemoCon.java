@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * author: zf
  * Date: 2016/8/24  16:21
- * Description:
+ * Description:　　h5+angular+json
  */
 @Controller
 @RequestMapping("/json")
@@ -43,6 +43,8 @@ public class JsonDemoCon  extends  BaseController{
     @RequestMapping(value = "/userList",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public Object getList(SearchConditions conditions){
+        Integer pageIndex = conditions.getPageIndex();
+        Integer pageSize = conditions.getPageSize();
         System.out.println(conditions);
         JSONObject result = new JSONObject();
         System.out.println(conditions);
@@ -51,15 +53,18 @@ public class JsonDemoCon  extends  BaseController{
         a.add(new User(2,"b","3","2",20));
         a.add(new User(2,"c","3","3",26));
         result.put("conditions",conditions.toString());
-        return returnPageResult(result,5,1,45,a);
+        return returnPageResult(result,pageSize,pageIndex,45,a);
     }
 
     @RequestMapping(value = "/oneDetail")
     @ResponseBody
     public Object getOne(@RequestParam("id")Integer id){
         System.out.println(id);
+        JSONObject result = new JSONObject();
         User user = new User(id, "itsName", "itsPwd", "itsToken");
         user.setAge(25);
+        result.put("user",user);
+        result.put("code",200);
         user.setCreateTime(new Date());
         return user;
     }
