@@ -33,6 +33,8 @@ public class User implements Serializable{
     private Integer age;
     @Column(name = "CreateTime")
     private Date createTime;
+    @Column(name = "State")
+    private Integer state;
     @Transient
     private String createTimeString;
     @Override
@@ -50,6 +52,14 @@ public class User implements Serializable{
     public String getCreateTimeString() {
 
         return createTimeString;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 
     public void setCreateTimeString(String createTimeString) throws ParseException {
@@ -128,5 +138,14 @@ public class User implements Serializable{
         this.logPwd = logPwd;
         this.logToken = logToken;
         this.age = age;
+    }
+
+    public User(Integer id,String logName, String logPwd, String logToken, Integer age,Integer state) {
+        this.id = id;
+        this.logName = logName;
+        this.logPwd = logPwd;
+        this.logToken = logToken;
+        this.age = age;
+        this.state =state;
     }
 }

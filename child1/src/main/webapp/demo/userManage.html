@@ -111,14 +111,14 @@
         </table>
         <div class="client-judge" ng-if="total_page<1">您好，暂时没有符合条件的任何数据</div>
     </div>
-    <div class="yc-pages" ng-show="total_page>1"><span class="yc-pages-num" ng-click="redirect(1)">首页</span> <span
-            class="yc-pages-num" title="跳转到 上一页" ng-show="page>1" ng-click="redirect(prev_page)">&lt;</span> <span
-            class="yc-pages-num yc-pages-current" title="当前页" ng-bind="page"></span> <span class="yc-pages-num"
-                                                                                           title="跳转到 下一页"
-                                                                                           ng-show="page<total_page"
-                                                                                           ng-click="redirect(page+1)">&gt;</span>
-        <span class="yc-pages-num" ng-click="redirect(total_page)">尾页</span> <span>共<span ng-bind="total_page"></span>页, 跳转到第</span><input
-                type="text" class="yc-pages-input" ng-model="go"><span class="group-text">页</span>
+    <div class="yc-pages" ng-show="total_page>1">
+        <span class="yc-pages-num" ng-click="redirect(1)">首页</span>
+        <span class="yc-pages-num" title="跳转到 上一页" ng-show="page>1" ng-click="redirect(prev_page)">&lt;</span>
+        <span class="yc-pages-num yc-pages-current" title="当前页" ng-bind="page"></span>
+        <span class="yc-pages-num" title="跳转到 下一页" ng-show="page<total_page" ng-click="redirect(page+1)">&gt;</span>
+        <span class="yc-pages-num" ng-click="redirect(total_page)">尾页</span>
+        <span>共<span ng-bind="total_page"></span>页, 跳转到第</span>
+        <input type="text" class="yc-pages-input" ng-model="go"><span class="group-text">页</span>
         <button class="yc-pages-go" ng-click="redirect(go)">确定</button>
     </div>
 </div>

@@ -12,11 +12,17 @@ myServiceApp.filter('type_UserAge',function(){
         }
     }
 });
-myServiceApp.filter('type_UserSex',function(){
+
+myServiceApp.filter('type_UserState',function(){
     return function(input){
-        //switch (input){
-        //    "1": return "男";
-        //}
+        switch (input){
+            case 1:
+                return '启用';
+            case -1:
+                return '禁用';
+            default:
+                return '--';
+        }
     }
 });
 
@@ -83,7 +89,7 @@ myServiceApp.controller('ServiceController', ['$rootScope','$scope','$http','use
             $http.post(url,query,configForm)
                 .success(function(res){
                     $scope.users = res.items;
-                    $scope.page = res.page;
+                    $scope.page = res.page;0
                     $scope.totalPage = res.totalPage;
                     $scope.totalCount = res.totalCount;
                     $scope.pageSize = res.pageSize;

@@ -3,6 +3,11 @@
  */
 var userDetailApp = angular.module("UserDetailApp",[]);
 
+userDetailApp.filter('dateYMD', function () {
+    return function (input) {
+        return new Date(input).toLocaleDateString()
+    };
+});
 userDetailApp.controller("UserDetailCtrl",['$http','$scope',
     function($http,$scope){
         //获取传递参数
@@ -28,8 +33,7 @@ userDetailApp.controller("UserDetailCtrl",['$http','$scope',
             });
         };
         $scope.editUser = function(query){
-            alert(query.createTime);
-            query.createTimeString = $scope.userModel.createTime;
+            query.createTime = "";
             console.info(query);//Object {id: 2, logName: "itsName", logPwd: "itsPwd", logToken: "itsTokedad"}
             console.info(JSON.stringify(query));//{"id":2,"logName":"itsName","logPwd":"itsPwd","logToken":"itsTokedad"}
             $http.post('http://localhost:8081/json/editUser.do', query, configJson)

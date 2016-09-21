@@ -1188,7 +1188,8 @@ app.controller("affcheAddCtrl", ["$scope", "SysNoticeFty", function (e, a) {
     var i = function (a) {
         ycui.loading.hide(), a && (e.page_size = a.page_size, e.prev_page = a.prev_page, e.total_page = a.total_page, e.items = a.items, e.page = a.page, e.total_count = a.total_count)
     };
-    t.userList({pageSize: n}).success(i), e.ruleId = getSearch("ruleId"), e.search = "", e.go = "", e.redirect = function (a, r) {
+    t.userList({pageSize: n}).success(i), e.ruleId = getSearch("ruleId"), e.search = "", e.go = "",
+        e.redirect = function (a, r) {
         r && (e.search = r);
         var o = {pageSize: n, pageIndex: a || 1};
         e.search && (o.logNameOrTrueName = e.search), e.roleId && (o.searchRole = e.roleId), e.departmentId && (o.searchDepartment = e.departmentId), e.companyId && (o.searchCompany = e.companyId), t.userList(o).success(i)

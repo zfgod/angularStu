@@ -49,8 +49,8 @@ public class JsonDemoCon  extends  BaseController{
         JSONObject result = new JSONObject();
         System.out.println(conditions);
         List<User> a = new ArrayList<>();
-        a.add(new User(1,"a","3","1",17));
-        a.add(new User(2,"b","3","2",20));
+        a.add(new User(1,"a","3","1",17,1));
+        a.add(new User(2,"b","3","2",20,-1));
         a.add(new User(2,"c","3","3",26));
         result.put("conditions",conditions.toString());
         return returnPageResult(result,pageSize,pageIndex,45,a);
@@ -62,11 +62,12 @@ public class JsonDemoCon  extends  BaseController{
         System.out.println(id);
         JSONObject result = new JSONObject();
         User user = new User(id, "itsName", "itsPwd", "itsToken");
+        user.setState(1);
         user.setAge(25);
         result.put("user",user);
         result.put("code",200);
         user.setCreateTime(new Date());
-        return user;
+        return result;
     }
 //  要求Json格式提交 ： @RequestBody, contentType:application/json
     @RequestMapping(value = "/editUser")
