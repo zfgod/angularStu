@@ -82,6 +82,10 @@
                      </list>
               </property>
        </bean>
+       <!-- hibernateTemplate-->
+        <bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+            <property name="sessionFactory" ref="sessionFactory"></property>
+        </bean>
        <!-- 配置事务管理器 -->
        <bean name="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
               <property name="sessionFactory" ref="sessionFactory"></property>
@@ -94,6 +98,8 @@
        <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
               <tx:attributes>
                      <tx:method name="add*"    propagation="REQUIRED"/>
+                  <!-- NOT_SUPPORTED  将不支持事务-->
+                     <!--<tx:method name="save*"   propagation="NOT_SUPPORTED"/>-->
                      <tx:method name="save*"   propagation="REQUIRED"/>
                      <tx:method name="insert*" propagation="REQUIRED"/>
                      <tx:method name="update*" propagation="REQUIRED"/>
@@ -101,11 +107,12 @@
                      <tx:method name="edit*"   propagation="REQUIRED"/>
                      <tx:method name="delete*" propagation="REQUIRED"/>
                      <tx:method name="remove*" propagation="REQUIRED"/>
-                     <tx:method name="get*"    propagation="REQUIRED" read-only="true"/>
-                     <tx:method name="find*"   propagation="REQUIRED" read-only="true"/>
-                     <tx:method name="select*" propagation="REQUIRED" read-only="true"/>
-                     <tx:method name="load*"   propagation="REQUIRED" read-only="true"/>
-                     <tx:method name="search*" propagation="REQUIRED" read-only="true"/>
+                     <tx:method name="get*"    propagation="REQUIRED" />
+                     <tx:method name="find*"   propagation="REQUIRED"/>
+                     <tx:method name="select*" propagation="REQUIRED" />
+                     <tx:method name="load*"   propagation="REQUIRED" />
+                     <tx:method name="search*" propagation="REQUIRED" />
+                     <tx:method name="test*" propagation="REQUIRED" />
                      <!-- 所有方法都创建事务管理-->
                      <tx:method name="*" propagation="REQUIRED" />
               </tx:attributes>

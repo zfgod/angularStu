@@ -1,10 +1,12 @@
 package sysManage.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sysManage.dto.SearchConditions;
 import sysManage.model.User;
+import sysManage.service.SysService;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +20,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/json")
 public class JsonDemoCon  extends  BaseController{
+    @Autowired
+    private SysService sysService;
 
     @RequestMapping("/user")
     @ResponseBody
@@ -48,12 +52,10 @@ public class JsonDemoCon  extends  BaseController{
         System.out.println(conditions);
         JSONObject result = new JSONObject();
         System.out.println(conditions);
-        List<User> a = new ArrayList<>();
-        a.add(new User(1,"a","3","1",17,1));
-        a.add(new User(2,"b","3","2",20,-1));
-        a.add(new User(2,"c","3","3",26));
+        List<User> userList = sysService.findUserList();
         result.put("conditions",conditions.toString());
-        return returnPageResult(result,pageSize,pageIndex,45,a);
+        int size = userList.size();
+        return returnPageResult(result,pageSize,pageIndex,size,userList);
     }
 
     @RequestMapping(value = "/oneDetail")
