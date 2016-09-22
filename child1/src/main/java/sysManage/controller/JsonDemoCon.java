@@ -34,14 +34,20 @@ public class JsonDemoCon  extends  BaseController{
         return result;
     }
 
-    @RequestMapping(value = "/commitUser",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value = "/addUser",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public Object commitData(@RequestBody User user){
+        JSONObject result = new JSONObject();
         System.out.println(user);
-        List<User> a = new ArrayList<>();
-        a.add(new User(1,"a","b","c"));
-        a.add(new User(2,"1","3","5"));
-        return a;
+        int i = sysService.saveUser(user);
+        if(i!=0){
+            result.put("msg","添加成功！");
+            result.put("code",1);
+        }else {
+            result.put("msg","添加失败！");
+            result.put("code",-1);
+        }
+        return result;
     }
 //  用户分页
     @RequestMapping(value = "/userList",method = {RequestMethod.POST,RequestMethod.GET})
@@ -52,7 +58,7 @@ public class JsonDemoCon  extends  BaseController{
         System.out.println(conditions);
         JSONObject result = new JSONObject();
         System.out.println(conditions);
-        List<User> userList = sysService.findUserList();
+        List<User> userList = sysService.findUserList(conditions);
         result.put("conditions",conditions.toString());
         int size = userList.size();
         return returnPageResult(result,pageSize,pageIndex,size,userList);

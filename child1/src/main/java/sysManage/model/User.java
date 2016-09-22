@@ -26,27 +26,48 @@ public class User implements Serializable{
     private String logName;
     @Column(name = "LogPwd")
     private String logPwd;
-// 没改数据库，暂用remark,sort
-    @Column(name = "Remark")
-    private String logToken;
-    @Column(name = "Sort")
+    @Column(name = "Email")
+    private String email;
+    @Column(name = "Age")
     private Integer age;
+    @Column(name = "Remark")
+    private String remark;
     @Column(name = "CreateTime")
     private Date createTime;
     @Column(name = "State")
     private Integer state;
     @Transient
     private String createTimeString;
+
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "createTimeString='" + createTimeString + '\'' +
+                ", id=" + id +
                 ", logName='" + logName + '\'' +
                 ", logPwd='" + logPwd + '\'' +
-                ", logToken='" + logToken + '\'' +
+                ", email='" + email + '\'' +
                 ", age=" + age +
+                ", remark='" + remark + '\'' +
                 ", createTime=" + createTime +
+                ", state=" + state +
                 '}';
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public String getCreateTimeString() {
@@ -109,42 +130,35 @@ public class User implements Serializable{
         this.logPwd = logPwd;
     }
 
-    public String getLogToken() {
-        return logToken;
-    }
-
-    public void setLogToken(String logToken) {
-        this.logToken = logToken;
-    }
 
     public User() {
     }
 
-    public User(String logName, String logPwd, String logToken) {
+    public User(String logName, String logPwd, String remark) {
         this.logName = logName;
         this.logPwd = logPwd;
-        this.logToken = logToken;
+        this.remark = remark;
     }
-    public User(Integer id,String logName, String logPwd, String logToken) {
+    public User(Integer id,String logName, String logPwd, String remark) {
         this.id = id;
         this.logName = logName;
         this.logPwd = logPwd;
-        this.logToken = logToken;
+        this.remark = remark;
     }
 
-    public User(Integer id,String logName, String logPwd, String logToken, Integer age) {
+    public User(Integer id,String logName, String logPwd, String remark, Integer age) {
         this.id = id;
         this.logName = logName;
         this.logPwd = logPwd;
-        this.logToken = logToken;
+        this.remark = remark;
         this.age = age;
     }
 
-    public User(Integer id,String logName, String logPwd, String logToken, Integer age,Integer state) {
+    public User(Integer id,String logName, String logPwd, String remark, Integer age,Integer state) {
         this.id = id;
         this.logName = logName;
         this.logPwd = logPwd;
-        this.logToken = logToken;
+        this.remark = remark;
         this.age = age;
         this.state =state;
     }

@@ -104,7 +104,6 @@ myServiceApp.controller('ServiceController', ['$rootScope','$scope','$http','use
             $scope.searchName && (query.searchName = $scope.searchName);
             $scope.searchAge && (query.intValue = $scope.searchAge);
             $scope.ageType && (query.ageType = $scope.ageType);
-            alert($scope.ageType);
             //查询
             $http.post(url,query,configForm)
                 .success(function(res){

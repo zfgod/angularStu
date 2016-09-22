@@ -10,20 +10,22 @@
 </head>
 
 <body>
-
+     <!-- 导航栏-->
+     <div> <a href="userAdd.html"> 添加用户 </a> </div>
     <div ng-controller="ServiceController">
         <!-- 搜索条件 -->
         <div >&nbsp;&nbsp;搜索条件行:&nbsp;&nbsp;
             <!-- 与后台参数名一致 -->
-            <input type="text" ng-placeholder="请输入搜索姓名" ng-model="searchName"
+            <input type="text" placeholder="请输入搜索姓名" ng-model="searchName"
                    ng-keypress="$event.which == 13 ? flashList():0">
             &nbsp;&nbsp;
             <!-- 获取并转换为后台所需参数名-->
-            <input type="text" ng-placeholder="请输入搜索年龄" ng-model="searchAge"
+
+            <input type="text" placeholder="请输入搜索年龄" ng-model="searchAge"
                    ng-keypress="$event.which == 13 ? flashList():0">&nbsp;&nbsp;
             &nbsp;&nbsp;
-
-            <select ng-model="ageType" ng-placeholder="请选择搜索人群">
+            <span>请选择搜索人群:</span>
+            <select ng-model="ageType" ng-change="flashList()">
                 <option ng-repeat="type in ageTypeSelect" value="{{type.id}}">{{type.name}}</option>
             </select>
 
@@ -38,7 +40,6 @@
                 <td>选择</td>
                 <td>名称</td>
                 <td>密码</td>
-                <td>标记</td>
                 <td>所属人群</td>
                 <td>查看</td>
             </tr>
@@ -48,7 +49,6 @@
                 <td><input name="id"  type="checkbox" value="{{user.id}}"/></td>
                 <td>{{user.logName}}</td>
                 <td>{{user.logPwd}}</td>
-                <td>{{user.logToken}}</td>
                 <td>{{user.age | type_UserAge}}</td>
                 <td>{{user.state | type_UserState}}</td>
                 <td><a href="user.html?id={{user.id}}&name={{user.logName}}">查看</a></td>
@@ -62,7 +62,8 @@
            <span ng-click="redirect(page+1)" title="下一页" ng-show="totalPage>page">&gt;&gt;</span>&nbsp;&nbsp;&nbsp;&nbsp;
            <span ng-click="redirect(totalPage)">尾页</span>&nbsp;&nbsp;&nbsp;&nbsp;
            <span>共<span ng-bind="totalPage"></span>页, 跳转到第</span>
-           <input type="text"  ng-model="go"><span >页</span>&nbsp;&nbsp;&nbsp;&nbsp;
+           <input type="text"  ng-model="go" placeholder="请输入跳转页" ng-keypress="$event.which == 13 ? redirect(go):0">
+           <span >页</span>&nbsp;&nbsp;&nbsp;&nbsp;
            <button  ng-click="redirect(go)">确定</button>
        </div>
     </div>

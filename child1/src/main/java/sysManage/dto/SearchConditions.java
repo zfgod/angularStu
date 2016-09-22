@@ -17,6 +17,17 @@ public class SearchConditions {
 
     private Integer intValue;
 
+    private Integer ageType;
+
+
+    public Integer getAgeType() {
+        return ageType;
+    }
+
+    public void setAgeType(Integer ageType) {
+        this.ageType = ageType;
+    }
+
     public String getSearchName() {
         return searchName;
     }
@@ -74,6 +85,7 @@ public class SearchConditions {
                 ", recordStart=" + recordStart +
                 ", searchName='" + searchName + '\'' +
                 ", intValue=" + intValue +
+                ", ageType=" + ageType +
                 '}';
     }
 }

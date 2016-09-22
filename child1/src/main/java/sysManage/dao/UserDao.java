@@ -1,5 +1,6 @@
 package sysManage.dao;
 
+import sysManage.dto.SearchConditions;
 import sysManage.model.User;
 
 import java.io.Serializable;
@@ -16,5 +17,5 @@ public interface UserDao{
 
      Serializable saveUser(User user);
 
-     List<User>  findUserList();
+     List<User>  findUserList(SearchConditions conditions);
 }

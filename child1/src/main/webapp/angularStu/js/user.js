@@ -34,8 +34,8 @@ userDetailApp.controller("UserDetailCtrl",['$http','$scope',
         };
         $scope.editUser = function(query){
             query.createTime = "";
-            console.info(query);//Object {id: 2, logName: "itsName", logPwd: "itsPwd", logToken: "itsTokedad"}
-            console.info(JSON.stringify(query));//{"id":2,"logName":"itsName","logPwd":"itsPwd","logToken":"itsTokedad"}
+            console.info(query);//Object {id: 2, logName: "itsName", logPwd: "itsPwd", remark: "itsTokedad"}
+            console.info(JSON.stringify(query));//{"id":2,"logName":"itsName","logPwd":"itsPwd","remark":"itsTokedad"}
             $http.post('http://localhost:8081/json/editUser.do', query, configJson)
                 .success(function (data) {
                     if(data.code == 200){
@@ -53,8 +53,8 @@ userDetailApp.controller("UserDetailCtrl",['$http','$scope',
                 })
         };
         $scope.editUserInForm = function(query){
-            console.info(query);//Object {id: 2, logName: "itsName", logPwd: "itsPwd", logToken: "itsTokedad"}
-            console.info(toBodyString(query));//{"id":2,"logName":"itsName","logPwd":"itsPwd","logToken":"itsTokedad"}
+            console.info(query);//Object {id: 2, logName: "itsName", logPwd: "itsPwd", remark: "itsTokedad"}
+            console.info(toBodyString(query));//{"id":2,"logName":"itsName","logPwd":"itsPwd","remark":"itsTokedad"}
             $http.post('http://localhost:8081/json/editUserInForm.do', query, configForm)
                 .success(function (data) {
                     if(data.code == 200){
