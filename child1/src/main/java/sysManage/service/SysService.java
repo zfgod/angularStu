@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sysManage.dao.UserDao;
 import sysManage.dto.SearchConditions;
-import sysManage.model.User;
+import sysManage.model.UsersEntity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +24,7 @@ public class SysService {
         return true;
     }
 
-    public int saveUser(User user){
+    public int saveUser(UsersEntity user){
         Serializable serializable = userDaoimpl.saveUser(user);
         System.out.println(serializable);
         if(serializable!=null){
@@ -33,8 +33,19 @@ public class SysService {
         return 0;
     }
 
-    public List<User> findUserList(SearchConditions conditions){
+    public List<UsersEntity> findUserList(SearchConditions conditions){
         return userDaoimpl.findUserList(conditions);
     }
 
+    public UsersEntity getOne(Integer id) {
+        return userDaoimpl.getOne(id);
+    }
+
+    public long findUserListCount(SearchConditions conditions) {
+        return userDaoimpl.findUserListCount(conditions);
+    }
+
+    public void updateUser(UsersEntity user) {
+         userDaoimpl.updateUser(user);
+    }
 }

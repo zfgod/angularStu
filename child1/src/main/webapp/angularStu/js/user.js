@@ -15,13 +15,13 @@ userDetailApp.controller("UserDetailCtrl",['$http','$scope',
         var name = getSearch("name");
         //var id = getSearch("id");
         if(id && judgeInt(id) && name){
-            alert("查询用户"+name+"中。。。");
+            //alert("查询用户"+name+"中。。。");
             //加载user信息
             //springMvc：@RequestParam("id")Integer id
             $http.get('http://localhost:8081/json/oneDetail.do?id='+id)
                 .success(function (res) {
                     if(res.code && res.code == 200){
-                        alert("正在为您显示内容。。");
+                        //alert("正在为您显示内容。。");
                         $scope.userModel = res.user;
                     }else if(res.code && res.code == 404){
                         alert("没有找到！");

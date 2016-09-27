@@ -1,7 +1,7 @@
 package sysManage.dao;
 
 import sysManage.dto.SearchConditions;
-import sysManage.model.User;
+import sysManage.model.UsersEntity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,9 +13,15 @@ import java.util.List;
  */
 
 public interface UserDao{
-     public User findLoginUser();
+     public UsersEntity findLoginUser();
 
-     Serializable saveUser(User user);
+     Serializable saveUser(UsersEntity user);
 
-     List<User>  findUserList(SearchConditions conditions);
+     List<UsersEntity>  findUserList(SearchConditions conditions);
+
+     UsersEntity getOne(Integer id);
+
+     long findUserListCount(SearchConditions conditions);
+
+     void updateUser(UsersEntity user);
 }

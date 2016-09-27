@@ -18,7 +18,6 @@ public class SysController {
     @Autowired
     private SysService sysService;
 
-
     @RequestMapping(method = {RequestMethod.GET,RequestMethod.POST},value = "/login")
     public String login(ModelAndView model){
         System.out.println("进入登录。。。");

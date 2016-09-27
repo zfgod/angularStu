@@ -5,11 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sysManage.dto.SearchConditions;
-import sysManage.model.User;
+import sysManage.model.UsersEntity;
 import sysManage.service.SysService;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,17 +24,17 @@ public class JsonDemoCon  extends  BaseController{
     @RequestMapping("/user")
     @ResponseBody
     public Object getData(){
-        List<User> a = new ArrayList<>();
-        a.add(new User("a","b","c"));
+//        List<UserEntity> a = new ArrayList<>();
+//        a.add(new UserEntity("a","b","c"));
         JSONObject result = new JSONObject();
-        result.put("users",a);
-        result.put("count",3);
+//        result.put("users",a);
+//        result.put("count",3);
         return result;
     }
 
     @RequestMapping(value = "/addUser",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
-    public Object commitData(@RequestBody User user){
+    public Object commitData(@RequestBody UsersEntity user){
         JSONObject result = new JSONObject();
         System.out.println(user);
         int i = sysService.saveUser(user);
@@ -58,10 +56,10 @@ public class JsonDemoCon  extends  BaseController{
         System.out.println(conditions);
         JSONObject result = new JSONObject();
         System.out.println(conditions);
-        List<User> userList = sysService.findUserList(conditions);
+        List<UsersEntity> userList = sysService.findUserList(conditions);
+        long  total = sysService.findUserListCount(conditions);
         result.put("conditions",conditions.toString());
-        int size = userList.size();
-        return returnPageResult(result,pageSize,pageIndex,size,userList);
+        return returnPageResult(result,pageSize,pageIndex,total,userList);
     }
 
     @RequestMapping(value = "/oneDetail")
@@ -69,21 +67,18 @@ public class JsonDemoCon  extends  BaseController{
     public Object getOne(@RequestParam("id")Integer id){
         System.out.println(id);
         JSONObject result = new JSONObject();
-        User user = new User(id, "itsName", "itsPwd", "itsToken");
-        user.setState(1);
-        user.setAge(25);
+        UsersEntity user = sysService.getOne(id);
         result.put("user",user);
         result.put("code",200);
-        user.setCreateTime(new Date());
+
         return result;
     }
 //  要求Json格式提交 ： @RequestBody, contentType:application/json
     @RequestMapping(value = "/editUser")
     @ResponseBody
-    public Object editUser(@RequestBody User user){
-        System.out.println(user.getCreateTimeString());
-        System.out.println(user);
+    public Object editUser(@RequestBody UsersEntity user){
         JSONObject result = new JSONObject();
+        sysService.updateUser(user);
         result.put("msg","修改成功！");
         result.put("code",200);
         return result;
@@ -91,7 +86,7 @@ public class JsonDemoCon  extends  BaseController{
 //  表单提交:contentType:application/x-www-form-urlencoded
     @RequestMapping(value = "/editUserInForm")
     @ResponseBody
-    public Object editUserInForm(User user){
+    public Object editUserInForm(UsersEntity user){
         System.out.println(user);
         JSONObject result = new JSONObject();
         result.put("msg","修改成功！");
@@ -99,13 +94,7 @@ public class JsonDemoCon  extends  BaseController{
         return result;
     }
     public static void main(String[] args) {
-        List<User> a = new ArrayList<>();
-        a.add(new User("a","b","c"));
-        JSONObject result = new JSONObject();
-        result.put("users",a);
-        result.put("count",3);
-        System.out.println(result.toJSONString());
-        System.out.println(result.toString());
+
     }
 
 }

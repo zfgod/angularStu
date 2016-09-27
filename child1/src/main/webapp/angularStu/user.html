@@ -23,11 +23,9 @@
         <input type="text" placeholder="请输入年龄" ng-model="userModel.age" >
         <div>日期：</div>
         <input type="text" placeholder="请输入日期" value="{{userModel.createTime | dateYMD}}" >
-
         <div>状态：</div>
-        <input type="radio" value="1" ng-model="userModel.state" >  <span>启用</span>
-        <input type="radio" value="-1" ng-model="userModel.state"> <span>禁用</span>
-
+        <input type="radio" value="1"  ng-model="userModel.state" name="start"> <span>启用</span>
+        <input type="radio" value="-1" ng-model="userModel.state" name="disable"> <span>禁用</span>
         <button name="edit" ng-click="editUser(userModel)">json提交编辑</button>
         <button name="edit" ng-click="editUserInForm(userModel)">表单提交编辑</button>
     </form>

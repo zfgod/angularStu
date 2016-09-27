@@ -54,7 +54,7 @@ myServiceApp.factory('userListService', ['$http',
 myServiceApp.controller('ServiceController', ['$rootScope','$scope','$http','userListService',
     function($rootScope,$scope,$http,userListService) {
         var query = {
-            pageSize:8,
+            pageSize:6,
             pageIndex:1
         };
         //人群属性下拉
@@ -82,14 +82,14 @@ myServiceApp.controller('ServiceController', ['$rootScope','$scope','$http','use
         //分页搜索
         $scope.redirect = function(count){
             var url = 'http://localhost:8081/json/userList.do';
-            $scope.searchName && (query.searchName = $scope.searchName);
-            $scope.searchAge && (query.intValue = $scope.searchAge);
-            $scope.ageType && (query.ageType = $scope.ageType);
+            query.searchName = $scope.searchName;
+            query.intValue = $scope.searchAge;
+            query.ageType = $scope.ageType;
             query.pageIndex = count;
             $http.post(url,query,configForm)
                 .success(function(res){
                     $scope.users = res.items;
-                    $scope.page = res.page;0
+                    $scope.page = res.page;
                     $scope.totalPage = res.totalPage;
                     $scope.totalCount = res.totalCount;
                     $scope.pageSize = res.pageSize;
@@ -101,9 +101,10 @@ myServiceApp.controller('ServiceController', ['$rootScope','$scope','$http','use
         $scope.flashList = function(){
             var url = 'http://localhost:8081/json/userList.do';
             //搜索条件获取
-            $scope.searchName && (query.searchName = $scope.searchName);
-            $scope.searchAge && (query.intValue = $scope.searchAge);
-            $scope.ageType && (query.ageType = $scope.ageType);
+            query.searchName = $scope.searchName;
+            query.intValue = $scope.searchAge;
+            query.ageType = $scope.ageType;
+            query.pageIndex = 1;
             //查询
             $http.post(url,query,configForm)
                 .success(function(res){
@@ -116,15 +117,6 @@ myServiceApp.controller('ServiceController', ['$rootScope','$scope','$http','use
                 console.log("error...");
             });
         };
-        ////查看用户
-        //$scope.selectOne = function(query){
-        //    $http.post('http://localhost:8081/json/oneDetail.do?id=' + query)
-        //        .success(function (data) {
-        //            console.log(data);
-        //        }).error(function (){
-        //            console.log("error...");
-        //        });
-        //};
     }
 ]);
 
