@@ -60,6 +60,14 @@
             <artifactId>hibernate-ehcache</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
+
+        <!-- hibernate 校验-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.2.0.Final</version>
+        </dependency>
+
          <!--日志 log4j门户，使用slf4j实现-->
         <dependency>
             <groupId>org.slf4j</groupId>
