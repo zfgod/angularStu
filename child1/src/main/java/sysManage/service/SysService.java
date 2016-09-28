@@ -45,7 +45,8 @@ public class SysService {
         return userDaoimpl.findUserListCount(conditions);
     }
 
-    public void updateUser(UsersEntity user) {
-         userDaoimpl.updateUser(user);
+    public int updateUser(UsersEntity user) {
+
+         return  userDaoimpl.updateUser(user);
     }
 }

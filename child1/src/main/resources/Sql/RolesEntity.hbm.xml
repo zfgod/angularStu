@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="sysManage.model.RolesEntity" table="roles" schema="" catalog="basesys">
+        <id name="id" column="Id"/>
+        <property name="roleName" column="RoleName"/>
+        <property name="type" column="Type"/>
+        <property name="remark" column="Remark"/>
+        <property name="state" column="State"/>
+        <property name="sort" column="Sort"/>
+        <property name="createTime" column="CreateTime"/>
+        <property name="updateTime" column="UpdateTime"/>
+    </class>
+
+</hibernate-mapping>

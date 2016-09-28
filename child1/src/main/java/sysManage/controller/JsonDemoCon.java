@@ -78,7 +78,7 @@ public class JsonDemoCon  extends  BaseController{
     @ResponseBody
     public Object editUser(@RequestBody UsersEntity user){
         JSONObject result = new JSONObject();
-        sysService.updateUser(user);
+        int i = sysService.updateUser(user);
         result.put("msg","修改成功！");
         result.put("code",200);
         return result;

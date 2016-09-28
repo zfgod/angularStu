@@ -1,9 +1,8 @@
 package sysManage.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -12,13 +11,45 @@ import java.util.Date;
  * Description:
  */
 @Entity
-@javax.persistence.Table(name = "users", schema = "", catalog = "basesys")
+@Table(name = "users", schema = "", catalog = "basesys")
 public class UsersEntity implements Serializable{
     private static final long serialVersionUID = 5621497022421418031L;
     private int id;
+    private String logName;
+    private String logPwd;
+    private String trueName;
+    private Integer age;
+    private String email;
+    private Integer companyId;
+    private Integer departmentId;
+    private String agencyNumber;
+    private String agencyNames;
+    private Integer leaderId;
+    private String leaderIds;
+    private String phone;
+    private String telephone;
+    private Integer isSuperAdmin;
+    private String remark;
+    private Integer state;
+    private String loginToken;
+    private Integer sort;
+    private Date createTime;
+    private Date updateTime;
+
+    public UsersEntity() {
+    }
+
+    public UsersEntity(int id, String logName,String logPwd, Integer age, String remark, Integer state) {
+        this.id = id;
+        this.logName = logName;
+        this.logPwd = logPwd;
+        this.age = age;
+        this.remark = remark;
+        this.state = state;
+    }
 
     @Id
-    @javax.persistence.Column(name = "Id")
+    @Column(name = "Id")
     public int getId() {
         return id;
     }
@@ -27,9 +58,8 @@ public class UsersEntity implements Serializable{
         this.id = id;
     }
 
-    private String logName;
-
-    @javax.persistence.Column(name = "LogName")
+    @Basic
+    @Column(name = "LogName")
 
     public String getLogName() {
         return logName;
@@ -39,10 +69,8 @@ public class UsersEntity implements Serializable{
         this.logName = logName;
     }
 
-    private String logPwd;
-
     @Basic
-    @javax.persistence.Column(name = "LogPwd")
+    @Column(name = "LogPwd")
     public String getLogPwd() {
         return logPwd;
     }
@@ -51,10 +79,8 @@ public class UsersEntity implements Serializable{
         this.logPwd = logPwd;
     }
 
-    private String trueName;
-
     @Basic
-    @javax.persistence.Column(name = "TrueName")
+    @Column(name = "TrueName")
     public String getTrueName() {
         return trueName;
     }
@@ -63,10 +89,8 @@ public class UsersEntity implements Serializable{
         this.trueName = trueName;
     }
 
-    private Integer age;
-
     @Basic
-    @javax.persistence.Column(name = "Age")
+    @Column(name = "Age")
     public Integer getAge() {
         return age;
     }
@@ -75,10 +99,8 @@ public class UsersEntity implements Serializable{
         this.age = age;
     }
 
-    private String email;
-
     @Basic
-    @javax.persistence.Column(name = "Email")
+    @Column(name = "Email")
     public String getEmail() {
         return email;
     }
@@ -87,10 +109,8 @@ public class UsersEntity implements Serializable{
         this.email = email;
     }
 
-    private Integer companyId;
-
     @Basic
-    @javax.persistence.Column(name = "CompanyId")
+    @Column(name = "CompanyId")
     public Integer getCompanyId() {
         return companyId;
     }
@@ -99,10 +119,8 @@ public class UsersEntity implements Serializable{
         this.companyId = companyId;
     }
 
-    private Integer departmentId;
-
     @Basic
-    @javax.persistence.Column(name = "DepartmentId")
+    @Column(name = "DepartmentId")
     public Integer getDepartmentId() {
         return departmentId;
     }
@@ -111,10 +129,8 @@ public class UsersEntity implements Serializable{
         this.departmentId = departmentId;
     }
 
-    private String agencyNumber;
-
     @Basic
-    @javax.persistence.Column(name = "AgencyNumber")
+    @Column(name = "AgencyNumber")
     public String getAgencyNumber() {
         return agencyNumber;
     }
@@ -123,10 +139,8 @@ public class UsersEntity implements Serializable{
         this.agencyNumber = agencyNumber;
     }
 
-    private String agencyNames;
-
     @Basic
-    @javax.persistence.Column(name = "AgencyNames")
+    @Column(name = "AgencyNames")
     public String getAgencyNames() {
         return agencyNames;
     }
@@ -135,10 +149,8 @@ public class UsersEntity implements Serializable{
         this.agencyNames = agencyNames;
     }
 
-    private Integer leaderId;
-
     @Basic
-    @javax.persistence.Column(name = "LeaderId")
+    @Column(name = "LeaderId")
     public Integer getLeaderId() {
         return leaderId;
     }
@@ -147,10 +159,8 @@ public class UsersEntity implements Serializable{
         this.leaderId = leaderId;
     }
 
-    private String leaderIds;
-
     @Basic
-    @javax.persistence.Column(name = "LeaderIds")
+    @Column(name = "LeaderIds")
     public String getLeaderIds() {
         return leaderIds;
     }
@@ -159,10 +169,8 @@ public class UsersEntity implements Serializable{
         this.leaderIds = leaderIds;
     }
 
-    private String phone;
-
     @Basic
-    @javax.persistence.Column(name = "Phone")
+    @Column(name = "Phone")
     public String getPhone() {
         return phone;
     }
@@ -171,10 +179,8 @@ public class UsersEntity implements Serializable{
         this.phone = phone;
     }
 
-    private String telephone;
-
     @Basic
-    @javax.persistence.Column(name = "Telephone")
+    @Column(name = "Telephone")
     public String getTelephone() {
         return telephone;
     }
@@ -183,10 +189,8 @@ public class UsersEntity implements Serializable{
         this.telephone = telephone;
     }
 
-    private Integer isSuperAdmin;
-
     @Basic
-    @javax.persistence.Column(name = "IsSuperAdmin")
+    @Column(name = "IsSuperAdmin")
     public Integer getIsSuperAdmin() {
         return isSuperAdmin;
     }
@@ -195,10 +199,8 @@ public class UsersEntity implements Serializable{
         this.isSuperAdmin = isSuperAdmin;
     }
 
-    private String remark;
-
     @Basic
-    @javax.persistence.Column(name = "Remark")
+    @Column(name = "Remark")
     public String getRemark() {
         return remark;
     }
@@ -207,10 +209,8 @@ public class UsersEntity implements Serializable{
         this.remark = remark;
     }
 
-    private Integer state;
-
     @Basic
-    @javax.persistence.Column(name = "State")
+    @Column(name = "State")
     public Integer getState() {
         return state;
     }
@@ -219,10 +219,8 @@ public class UsersEntity implements Serializable{
         this.state = state;
     }
 
-    private String loginToken;
-
     @Basic
-    @javax.persistence.Column(name = "LoginToken")
+    @Column(name = "LoginToken")
     public String getLoginToken() {
         return loginToken;
     }
@@ -231,10 +229,8 @@ public class UsersEntity implements Serializable{
         this.loginToken = loginToken;
     }
 
-    private Integer sort;
-
     @Basic
-    @javax.persistence.Column(name = "Sort")
+    @Column(name = "Sort")
     public Integer getSort() {
         return sort;
     }
@@ -243,10 +239,12 @@ public class UsersEntity implements Serializable{
         this.sort = sort;
     }
 
-    private Date createTime;
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }
 
     @Basic
-    @javax.persistence.Column(name = "CreateTime")
+    @Column(name = "CreateTime")
     public Date getCreateTime() {
         return createTime;
     }
@@ -255,10 +253,12 @@ public class UsersEntity implements Serializable{
         this.createTime = createTime;
     }
 
-    private Date updateTime;
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
+    }
 
     @Basic
-    @javax.persistence.Column(name = "UpdateTime")
+    @Column(name = "UpdateTime")
     public Date getUpdateTime() {
         return updateTime;
     }
@@ -323,18 +323,6 @@ public class UsersEntity implements Serializable{
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         result = 31 * result + (updateTime != null ? updateTime.hashCode() : 0);
         return result;
-    }
-
-    public UsersEntity() {
-    }
-
-    public UsersEntity(int id, String logName,String logPwd, Integer age, String remark, Integer state) {
-        this.id = id;
-        this.logName = logName;
-        this.logPwd = logPwd;
-        this.age = age;
-        this.remark = remark;
-        this.state = state;
     }
 
     @Override

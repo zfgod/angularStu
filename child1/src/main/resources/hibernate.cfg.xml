@@ -17,5 +17,8 @@
       <mapping class="sysManage.model.UsersEntity"/>
       <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
+    <!--<mapping package="Sql"/>-->
+    <mapping resource="Sql/UsersEntity.hbm.xml"></mapping>
+    <mapping package="Sql"></mapping>
   </session-factory>
 </hibernate-configuration>

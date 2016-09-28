@@ -1,8 +1,7 @@
 package sysManage.dao.impl;
 
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
@@ -13,8 +12,6 @@ import sysManage.model.UsersEntity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import org.springframework.beans.BeanUtils;
-
 
 /**
  * author: zf
@@ -39,39 +36,40 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public List<UsersEntity> findUserList(SearchConditions conditions) {
-        SessionFactory sessionFactory = hibernateTemplate.getSessionFactory();
-        Session session = sessionFactory.getCurrentSession();
-        StringBuffer baseSql = new StringBuffer("select * from users where 1=1");
-        if(conditions.getSearchName()!=null){
-            baseSql.append(" and logName like '%").append(conditions.getSearchName()).append("%'");
-        }
-        if(conditions.getRecordStart()!=null && conditions.getPageSize()!=null){
-            baseSql.append(" limit ").append(conditions.getRecordStart()).append(",").append(conditions.getPageSize());
-        }
-        System.out.println(" sql:"+baseSql.toString());
-        SQLQuery sqlQuery = session.createSQLQuery(baseSql.toString());
-        return sqlQuery.addEntity(UsersEntity.class).list();
+         SessionFactory sessionFactory = hibernateTemplate.getSessionFactory();
+         Session session = sessionFactory.getCurrentSession();
+         Query q = session.getNamedQuery("userList");
+         q.setProperties(conditions);
+         q.setResultTransformer(Transformers.aliasToBean(UsersEntity.class));
+//         q.setParameter("recordStart",conditions.getRecordStart());
+//         q.setParameter("pageSize",conditions.getPageSize());
+         return q.list();
     }
     @Override
     public long findUserListCount(SearchConditions conditions) {
         SessionFactory sessionFactory = hibernateTemplate.getSessionFactory();
         Session session = sessionFactory.getCurrentSession();
-        StringBuffer baseSql = new StringBuffer("select * from users where 1=1");
-        if(conditions.getSearchName()!=null){
-            baseSql.append(" and logName like '%").append(conditions.getSearchName()).append("%'");
-        }
-        SQLQuery sqlQuery = session.createSQLQuery(baseSql.toString());
-        return sqlQuery.list().size();
+        Query q = session.getNamedQuery("userListCount");
+        return 1;
+//        return q.uniqueResult();
     }
 
     @Override
-    public void updateUser(UsersEntity user) {
-        String[] ignoreProperties= new String[]{"logPwd","createTime"};
-        UsersEntity forEdit = new UsersEntity();
-        BeanUtils.copyProperties(user,forEdit,ignoreProperties);
-        hibernateTemplate.saveOrUpdate(forEdit);
-    }
+    public int updateUser(UsersEntity user) {
+        SessionFactory sessionFactory = hibernateTemplate.getSessionFactory();
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query q = currentSession.getNamedQuery("updateUser");
+/**  setProperties 较一个个参数的set更为智能，且user中的参数如果在sql中没有，不会出现错误  */
+        user.setUpdateTime(new Date());
+        q.setProperties(user);
+//        q.setParameter("id", user.getId());
+//        q.setParameter("remark", user.getRemark());
+//        q.setParameter("age", user.getAge());
+//        q.setParameter("updateTime", new Date());
+//        q.setParameter("state",user.getState());//此参数 sql里并没有,会.QueryParameterException: could not locate named parameter [state]
+        return q.executeUpdate();
 
+    }
     @Override
     public UsersEntity getOne(Integer id) {
         Session currentSession = hibernateTemplate.getSessionFactory().getCurrentSession();

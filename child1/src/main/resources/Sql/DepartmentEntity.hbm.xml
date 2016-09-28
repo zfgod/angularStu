@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="sysManage.model.DepartmentEntity" table="department" schema="" catalog="basesys">
+        <id name="id" column="Id"/>
+        <property name="agencyNumber" column="AgencyNumber"/>
+        <property name="agencyLevel" column="AgencyLevel"/>
+        <property name="departmentName" column="DepartmentName"/>
+        <property name="depId" column="DepId"/>
+        <property name="parentId" column="ParentId"/>
+        <property name="parentCode" column="ParentCode"/>
+        <property name="parentName" column="ParentName"/>
+        <property name="companyId" column="CompanyId"/>
+        <property name="companyType" column="CompanyType"/>
+        <property name="manager" column="Manager"/>
+        <property name="phone" column="Phone"/>
+        <property name="remark" column="Remark"/>
+        <property name="state" column="State"/>
+        <property name="sort" column="Sort"/>
+        <property name="createTime" column="CreateTime"/>
+        <property name="updateTime" column="UpdateTime"/>
+    </class>
+</hibernate-mapping>

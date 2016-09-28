@@ -23,5 +23,5 @@ public interface UserDao{
 
      long findUserListCount(SearchConditions conditions);
 
-     void updateUser(UsersEntity user);
+     int updateUser(UsersEntity user);
 }

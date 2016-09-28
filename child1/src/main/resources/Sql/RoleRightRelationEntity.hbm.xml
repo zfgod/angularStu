@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="sysManage.model.RoleRightRelationEntity" table="role_right_relation" schema="" catalog="basesys">
+        <id name="id" column="Id"/>
+        <property name="roleId" column="RoleId"/>
+        <property name="rightId" column="RightId"/>
+        <property name="remark" column="Remark"/>
+        <property name="state" column="State"/>
+        <property name="sort" column="Sort"/>
+        <property name="createTime" column="CreateTime"/>
+        <property name="updateTime" column="UpdateTime"/>
+    </class>
+</hibernate-mapping>

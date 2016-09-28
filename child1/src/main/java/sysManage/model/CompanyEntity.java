@@ -249,4 +249,27 @@ public class CompanyEntity {
         result = 31 * result + (updateTime != null ? updateTime.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "CompanyEntity{" +
+                "id=" + id +
+                ", agencyNumber='" + agencyNumber + '\'' +
+                ", agencyLevel=" + agencyLevel +
+                ", companyName='" + companyName + '\'' +
+                ", companyType=" + companyType +
+                ", companyAreaId=" + companyAreaId +
+                ", abbrName='" + abbrName + '\'' +
+                ", companyUrl='" + companyUrl + '\'' +
+                ", manager='" + manager + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", remark='" + remark + '\'' +
+                ", state=" + state +
+                ", sort=" + sort +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
+    }
 }
