@@ -1,7 +1,8 @@
 package sysManage.model;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.sql.Date;
+import java.util.Set;
 
 /**
  * author: zf
@@ -26,8 +27,42 @@ public class CompanyEntity {
     private String remark;
     private Integer state;
     private Integer sort;
-    private Timestamp createTime;
-    private Timestamp updateTime;
+    private Date createTime;
+    private Date updateTime;
+    
+    private Set<DepartmentEntity> departments;
+
+    @Override
+    public String toString() {
+        return "CompanyEntity{" +
+                "id=" + id +
+                ", agencyNumber='" + agencyNumber + '\'' +
+                ", agencyLevel=" + agencyLevel +
+                ", companyName='" + companyName + '\'' +
+                ", companyType=" + companyType +
+                ", companyAreaId=" + companyAreaId +
+                ", abbrName='" + abbrName + '\'' +
+                ", companyUrl='" + companyUrl + '\'' +
+                ", manager='" + manager + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", remark='" + remark + '\'' +
+                ", state=" + state +
+                ", sort=" + sort +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", departments=" + departments +
+                '}';
+    }
+
+    public Set<DepartmentEntity> getDepartments() {
+        return departments;
+    }
+
+    public void setDepartments(Set<DepartmentEntity> departments) {
+        this.departments = departments;
+    }
 
     @Id
     @Column(name = "Id")
@@ -181,21 +216,21 @@ public class CompanyEntity {
 
     @Basic
     @Column(name = "CreateTime")
-    public Timestamp getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
     @Basic
     @Column(name = "UpdateTime")
-    public Timestamp getUpdateTime() {
+    public Date getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Timestamp updateTime) {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -250,26 +285,4 @@ public class CompanyEntity {
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "CompanyEntity{" +
-                "id=" + id +
-                ", agencyNumber='" + agencyNumber + '\'' +
-                ", agencyLevel=" + agencyLevel +
-                ", companyName='" + companyName + '\'' +
-                ", companyType=" + companyType +
-                ", companyAreaId=" + companyAreaId +
-                ", abbrName='" + abbrName + '\'' +
-                ", companyUrl='" + companyUrl + '\'' +
-                ", manager='" + manager + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", telephone='" + telephone + '\'' +
-                ", remark='" + remark + '\'' +
-                ", state=" + state +
-                ", sort=" + sort +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                '}';
-    }
 }

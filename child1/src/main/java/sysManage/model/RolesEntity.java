@@ -2,6 +2,7 @@ package sysManage.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Set;
 
 /**
  * author: zf
@@ -20,6 +21,23 @@ public class RolesEntity {
     private Timestamp createTime;
     private Timestamp updateTime;
 
+    private Set<UsersEntity> users;
+
+    @Override
+    public String toString() {
+        return "RolesEntity{" +
+                "id=" + id +
+                ", roleName='" + roleName + '\'' +
+                ", type=" + type +
+                ", remark='" + remark + '\'' +
+                ", state=" + state +
+                ", sort=" + sort +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", users=" + users +
+                '}';
+    }
+
     @Id
     @Column(name = "Id")
     public int getId() {
@@ -30,7 +48,7 @@ public class RolesEntity {
         this.id = id;
     }
 
-    @Basic
+    
     @Column(name = "RoleName")
     public String getRoleName() {
         return roleName;
@@ -40,7 +58,15 @@ public class RolesEntity {
         this.roleName = roleName;
     }
 
-    @Basic
+    public Set<UsersEntity> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<UsersEntity> users) {
+        this.users = users;
+    }
+
+    
     @Column(name = "Type")
     public Integer getType() {
         return type;
@@ -50,7 +76,7 @@ public class RolesEntity {
         this.type = type;
     }
 
-    @Basic
+    
     @Column(name = "Remark")
     public String getRemark() {
         return remark;
@@ -60,7 +86,7 @@ public class RolesEntity {
         this.remark = remark;
     }
 
-    @Basic
+    
     @Column(name = "State")
     public Integer getState() {
         return state;
@@ -70,7 +96,7 @@ public class RolesEntity {
         this.state = state;
     }
 
-    @Basic
+    
     @Column(name = "Sort")
     public Integer getSort() {
         return sort;
@@ -80,7 +106,7 @@ public class RolesEntity {
         this.sort = sort;
     }
 
-    @Basic
+    
     @Column(name = "CreateTime")
     public Timestamp getCreateTime() {
         return createTime;
@@ -90,7 +116,7 @@ public class RolesEntity {
         this.createTime = createTime;
     }
 
-    @Basic
+    
     @Column(name = "UpdateTime")
     public Timestamp getUpdateTime() {
         return updateTime;

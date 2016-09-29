@@ -22,5 +22,10 @@
         <property name="sort" column="Sort"/>
         <property name="createTime" column="CreateTime"/>
         <property name="updateTime" column="UpdateTime"/>
+<!-- 一个公司多个部门 -->
+        <set name="departments" table="department">
+            <key column="CompanyId"></key>
+            <one-to-many class="sysManage.model.CompanyEntity" />
+        </set>
     </class>
 </hibernate-mapping>

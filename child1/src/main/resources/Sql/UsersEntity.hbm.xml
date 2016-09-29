@@ -25,7 +25,24 @@
         <property name="sort" column="Sort"/>
         <property name="createTime" column="CreateTime"/>
         <property name="updateTime" column="UpdateTime"/>
+        <!-- 用户与角色为多对多关系
+             转为两个一对多：一个用户多个角色 ，
+                          一个角色有多个用户，
+
+        -->
+        <set name="roles" table="user_role_relation">
+            <!-- user在关联表中的外键-->
+            <key column="UserId" ></key>
+            <many-to-many class="sysManage.model.RolesEntity" column="RoleId"/>
+        </set>
     </class>
+
+
+
+
+
+
+
     <sql-query name="updateUser">
         <![CDATA[
        update users

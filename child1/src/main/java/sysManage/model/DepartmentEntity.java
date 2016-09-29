@@ -1,7 +1,7 @@
 package sysManage.model;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * author: zf
@@ -26,8 +26,42 @@ public class DepartmentEntity {
     private String remark;
     private Integer state;
     private Integer sort;
-    private Timestamp createTime;
-    private Timestamp updateTime;
+    private Date createTime;
+    private Date updateTime;
+    
+    private CompanyEntity company;
+
+    @Override
+    public String toString() {
+        return "DepartmentEntity{" +
+                "id=" + id +
+                ", agencyNumber='" + agencyNumber + '\'' +
+                ", agencyLevel=" + agencyLevel +
+                ", departmentName='" + departmentName + '\'' +
+                ", depId='" + depId + '\'' +
+                ", parentId='" + parentId + '\'' +
+                ", parentCode='" + parentCode + '\'' +
+                ", parentName='" + parentName + '\'' +
+                ", companyId=" + companyId +
+                ", companyType=" + companyType +
+                ", manager='" + manager + '\'' +
+                ", phone='" + phone + '\'' +
+                ", remark='" + remark + '\'' +
+                ", state=" + state +
+                ", sort=" + sort +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", company=" + company +
+                '}';
+    }
+
+    public CompanyEntity getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyEntity company) {
+        this.company = company;
+    }
 
     @Id
     @Column(name = "Id")
@@ -181,21 +215,21 @@ public class DepartmentEntity {
 
     @Basic
     @Column(name = "CreateTime")
-    public Timestamp getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
     @Basic
     @Column(name = "UpdateTime")
-    public Timestamp getUpdateTime() {
+    public Date getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Timestamp updateTime) {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 

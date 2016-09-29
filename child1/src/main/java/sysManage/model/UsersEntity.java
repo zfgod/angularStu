@@ -2,8 +2,8 @@ package sysManage.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * author: zf
@@ -36,6 +36,9 @@ public class UsersEntity implements Serializable{
     private Date createTime;
     private Date updateTime;
 
+    private Set<RolesEntity> roles;
+
+
     public UsersEntity() {
     }
 
@@ -48,6 +51,14 @@ public class UsersEntity implements Serializable{
         this.state = state;
     }
 
+    public Set<RolesEntity> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<RolesEntity> roles) {
+        this.roles = roles;
+    }
+
     @Id
     @Column(name = "Id")
     public int getId() {
@@ -58,7 +69,7 @@ public class UsersEntity implements Serializable{
         this.id = id;
     }
 
-    @Basic
+    
     @Column(name = "LogName")
 
     public String getLogName() {
@@ -69,7 +80,7 @@ public class UsersEntity implements Serializable{
         this.logName = logName;
     }
 
-    @Basic
+    
     @Column(name = "LogPwd")
     public String getLogPwd() {
         return logPwd;
@@ -79,7 +90,7 @@ public class UsersEntity implements Serializable{
         this.logPwd = logPwd;
     }
 
-    @Basic
+    
     @Column(name = "TrueName")
     public String getTrueName() {
         return trueName;
@@ -89,7 +100,7 @@ public class UsersEntity implements Serializable{
         this.trueName = trueName;
     }
 
-    @Basic
+    
     @Column(name = "Age")
     public Integer getAge() {
         return age;
@@ -99,7 +110,7 @@ public class UsersEntity implements Serializable{
         this.age = age;
     }
 
-    @Basic
+    
     @Column(name = "Email")
     public String getEmail() {
         return email;
@@ -109,7 +120,7 @@ public class UsersEntity implements Serializable{
         this.email = email;
     }
 
-    @Basic
+    
     @Column(name = "CompanyId")
     public Integer getCompanyId() {
         return companyId;
@@ -119,7 +130,7 @@ public class UsersEntity implements Serializable{
         this.companyId = companyId;
     }
 
-    @Basic
+    
     @Column(name = "DepartmentId")
     public Integer getDepartmentId() {
         return departmentId;
@@ -129,7 +140,7 @@ public class UsersEntity implements Serializable{
         this.departmentId = departmentId;
     }
 
-    @Basic
+    
     @Column(name = "AgencyNumber")
     public String getAgencyNumber() {
         return agencyNumber;
@@ -139,7 +150,7 @@ public class UsersEntity implements Serializable{
         this.agencyNumber = agencyNumber;
     }
 
-    @Basic
+    
     @Column(name = "AgencyNames")
     public String getAgencyNames() {
         return agencyNames;
@@ -149,7 +160,7 @@ public class UsersEntity implements Serializable{
         this.agencyNames = agencyNames;
     }
 
-    @Basic
+    
     @Column(name = "LeaderId")
     public Integer getLeaderId() {
         return leaderId;
@@ -159,7 +170,7 @@ public class UsersEntity implements Serializable{
         this.leaderId = leaderId;
     }
 
-    @Basic
+    
     @Column(name = "LeaderIds")
     public String getLeaderIds() {
         return leaderIds;
@@ -169,7 +180,7 @@ public class UsersEntity implements Serializable{
         this.leaderIds = leaderIds;
     }
 
-    @Basic
+    
     @Column(name = "Phone")
     public String getPhone() {
         return phone;
@@ -179,7 +190,7 @@ public class UsersEntity implements Serializable{
         this.phone = phone;
     }
 
-    @Basic
+    
     @Column(name = "Telephone")
     public String getTelephone() {
         return telephone;
@@ -189,7 +200,7 @@ public class UsersEntity implements Serializable{
         this.telephone = telephone;
     }
 
-    @Basic
+    
     @Column(name = "IsSuperAdmin")
     public Integer getIsSuperAdmin() {
         return isSuperAdmin;
@@ -199,7 +210,7 @@ public class UsersEntity implements Serializable{
         this.isSuperAdmin = isSuperAdmin;
     }
 
-    @Basic
+    
     @Column(name = "Remark")
     public String getRemark() {
         return remark;
@@ -209,7 +220,7 @@ public class UsersEntity implements Serializable{
         this.remark = remark;
     }
 
-    @Basic
+    
     @Column(name = "State")
     public Integer getState() {
         return state;
@@ -219,7 +230,7 @@ public class UsersEntity implements Serializable{
         this.state = state;
     }
 
-    @Basic
+    
     @Column(name = "LoginToken")
     public String getLoginToken() {
         return loginToken;
@@ -229,7 +240,7 @@ public class UsersEntity implements Serializable{
         this.loginToken = loginToken;
     }
 
-    @Basic
+    
     @Column(name = "Sort")
     public Integer getSort() {
         return sort;
@@ -239,33 +250,26 @@ public class UsersEntity implements Serializable{
         this.sort = sort;
     }
 
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
-    @Basic
+   
     @Column(name = "CreateTime")
     public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public void setUpdateTime(Timestamp updateTime) {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 
-    @Basic
+    
     @Column(name = "UpdateTime")
     public Date getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -295,10 +299,8 @@ public class UsersEntity implements Serializable{
         if (sort != null ? !sort.equals(that.sort) : that.sort != null) return false;
         if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null) return false;
         if (updateTime != null ? !updateTime.equals(that.updateTime) : that.updateTime != null) return false;
-
         return true;
     }
-
     @Override
     public int hashCode() {
         int result = id;
