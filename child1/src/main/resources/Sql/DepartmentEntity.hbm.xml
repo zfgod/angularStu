@@ -22,10 +22,10 @@
         <property name="sort" column="Sort"/>
         <property name="createTime" column="CreateTime"/>
         <property name="updateTime" column="UpdateTime"/>
-        <!-- 多个部门属于一个公司-->
-        <many-to-one name="company" column="CompanyId" not-null="true"
-                     class="sysManage.model.CompanyEntity">
-        </many-to-one>
+        <!--&lt;!&ndash; 多个部门属于一个公司&ndash;&gt;-->
+        <!--<many-to-one name="company" column="CompanyId" not-null="true"-->
+                     <!--class="sysManage.model.CompanyEntity">-->
+        <!--</many-to-one>-->
     </class>
 
 
