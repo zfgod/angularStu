@@ -13,10 +13,10 @@
         <property name="sort" column="Sort"/>
         <property name="createTime" column="CreateTime"/>
         <property name="updateTime" column="UpdateTime"/>
-        <set name="users" table="user_role_relation" inverse="true">
-            <key column="RoleId"></key>
-            <many-to-many class="sysManage.model.UsersEntity" column="UserId"/>
-        </set>
+        <!--<set name="users" table="user_role_relation" inverse="true">-->
+            <!--<key column="RoleId"></key>-->
+            <!--<many-to-many class="sysManage.model.UsersEntity" column="UserId"/>-->
+        <!--</set>-->
     </class>
 
 </hibernate-mapping>

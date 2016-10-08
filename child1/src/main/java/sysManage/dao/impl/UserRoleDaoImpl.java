@@ -24,8 +24,8 @@ public class UserRoleDaoImpl implements UserRoleDao{
         Session session = hibernateTemplate.getSessionFactory().getCurrentSession();
         UsersEntity usersEntity = session.load(UsersEntity.class, 1);
         System.out.println(usersEntity.toString());
-        Set<RolesEntity> roles = usersEntity.getRoles();
-        System.out.println(roles.toString());
+//        Set<RolesEntity> roles = usersEntity.getRoles();
+//        System.out.println(roles.toString());
         return usersEntity;
     }
 }

@@ -30,11 +30,11 @@
                           一个角色有多个用户，
 
         -->
-        <set name="roles" table="user_role_relation">
-            <!-- user在关联表中的外键-->
-            <key column="UserId" ></key>
-            <many-to-many class="sysManage.model.RolesEntity" column="RoleId"/>
-        </set>
+        <!--<set name="roles" table="user_role_relation">-->
+            <!--&lt;!&ndash; user在关联表中的外键&ndash;&gt;-->
+            <!--<key column="UserId" ></key>-->
+            <!--<many-to-many class="sysManage.model.RolesEntity" column="RoleId"/>-->
+        <!--</set>-->
     </class>
 
 
