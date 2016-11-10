@@ -9,6 +9,7 @@ import java.util.*;
  * author: zf
  * Date: 2016/10/12  16:02
  * Description:更新配置文件参数
+ * 注意只会去修改target下面的文件
  */
 public class ConfigUpdateUtils {
     public static void main(String[] args) {

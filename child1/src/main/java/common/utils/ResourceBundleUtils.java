@@ -13,7 +13,8 @@ public class ResourceBundleUtils {
     public static void main(String[] args) {
 //      resource目录下： config/config.properties
 //      target: config/config.properties
-     /*   ResourceBundle allMessage = getAllMessage("config.config");
+//      target 不写文件名后缀，默认只能是.properties
+       ResourceBundle allMessage = getAllMessage("config.config");
         if(allMessage!=null){
             Enumeration<String> keys = allMessage.getKeys();
             while (keys.hasMoreElements()){
@@ -22,12 +23,12 @@ public class ResourceBundleUtils {
             }
         }else {
             System.out.println("null");
-        }*/
+        }
 //      target: config/database.properties
        /* String driverClassName = getValue("config.database", "driverClassName");
         System.out.println(driverClassName);*/
 
-        String[] support_types = getArrayVaules("config.fileupload", "support_types", "\\|\\|");
+        String[] support_types = getArrayVaules("config/config", "support_types", "_");
         for (String support_type : support_types) {
             System.out.println(support_type);
         }
