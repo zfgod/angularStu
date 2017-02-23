@@ -10,6 +10,7 @@ import sysManage.dto.SearchConditions;
 import sysManage.model.UsersEntity;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -50,8 +51,8 @@ public class UserDaoImpl implements UserDao{
         SessionFactory sessionFactory = hibernateTemplate.getSessionFactory();
         Session session = sessionFactory.getCurrentSession();
         Query q = session.getNamedQuery("userListCount");
-        return 1;
-//        return q.uniqueResult();
+        BigInteger bigInteger = (BigInteger) q.uniqueResult();
+        return bigInteger.longValue();
     }
 
     @Override

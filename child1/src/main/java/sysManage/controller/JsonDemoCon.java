@@ -55,7 +55,6 @@ public class JsonDemoCon  extends  BaseController{
         Integer pageSize = conditions.getPageSize();
         System.out.println(conditions);
         JSONObject result = new JSONObject();
-        System.out.println(conditions);
         List<UsersEntity> userList = sysService.findUserList(conditions);
         long  total = sysService.findUserListCount(conditions);
         result.put("conditions",conditions.toString());
